@@ -1,9 +1,10 @@
 #include "POKEMON/pokemon.h"
 #include "POKEDEX/pokedex.h"
+#include "BATTLE/battle.h"
 #include "PLAYER/player.h"
 #include "PRINTS/print.h"
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 int main(int argc, char ** argv) {
 
@@ -15,20 +16,20 @@ int main(int argc, char ** argv) {
     if (isFirstGame == 1) {
         //start the game
         player = firstGame();
+        Pokedex *pokedex = newPokedexFromCsv("FILES/pokedex.csv");
         if (player == NULL){
             printf("ERROR");
             return 0;
         }
+        launchBattle(player, pokedex);
     } else{
         //TODO: Get data from the saved file.
     }
 
-    Pokemon *p = newPokemon("Pikachu", 100, 100, 100, 100, 0, "Electric");
+   /* Pokemon *p = newPokemon("Pikachu", 100, 100, 100, 100, 0, "Electric");
     printPokemon(p);
-//
-//    Pokedex *pokedex = newPokedexFromCsv("FILES/pokedex.csv");
-//
-//    printPokedex(pokedex);
+
+    printPokedex(pokedex);*/
 
     return 0;
 }
