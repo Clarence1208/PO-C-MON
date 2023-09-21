@@ -1,9 +1,10 @@
-#include "PERLIN/perlin.h"
-#include "UTILS/utils.h"
+#include "../PERLIN/perlin.h"
+#include "../UTILS/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "map.h"
 
 typedef struct {
     int x;
@@ -39,7 +40,6 @@ void movePlayer(char ** map, Player * p, char movement) {
         srand(time(NULL));
         if(rand() % 10 == 0) {
             //launchBattle() // CLARENCE ICI MON GRAND
-            printf("Battle Should play");
         }
     }    
     
