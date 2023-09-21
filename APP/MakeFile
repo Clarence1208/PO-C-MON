@@ -1,0 +1,3 @@
+//build all the files from app folder
+all: $(APP_OBJS)
+	$(CC) $(CFLAGS) $(APP_OBJS) -o $(APP_NAME)
