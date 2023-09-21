@@ -1,5 +1,5 @@
 #include "print.h"
-#include "pokemon.h"
+#include "../TEAM/team.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,7 +14,10 @@ void firstGame(){
     char starter ;
 
     Pokemon * starters = malloc(sizeof(Pokemon));
-    newPokemon("Carapuce", int hpMax, int attack, int defense, int speed,  char*type);
+
+    starters[0] =  newPokemon("Bulbizarre", 90,49, 24, 45, "Plante");
+    starters[1] = newPokemon("Salamèche", 78,52, 21, 65, "Feu");
+    starters[2] = newPokemon("Carapuce", 88,48, 32, 43, "Eau");
 
     printf(">>???: ...\n");
     printf("........\n");
@@ -36,11 +39,13 @@ void firstGame(){
         switch (starter) {
             case '1':
                 //add the pokemon to your team
-
+                Team * myTeam = initTeam(starters[0]);
                 break;
             case '2':
+                Team * myTeam = initTeam(starters[1]);
                 break;
             case '3':
+                Team * myTeam = initTeam(starters[2]);
                 break;
             default:
                 printf("You can only choose 1, 2, 3\n");

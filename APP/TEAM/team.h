@@ -1,5 +1,6 @@
 #ifndef PO_C_MON_TEAM_H
 #define PO_C_MON_TEAM_H
+#include "../POKEMON/pokemon.h"
 
 typedef struct Team{
     short max;
@@ -8,7 +9,7 @@ typedef struct Team{
     short alivePokemons;
 } Team;
 
-Team initTeam();
-void addToTeam(Team myTeam, Pokemon newPokemon);
+Team * initTeam(Pokemon * starter);
+void addToTeam(Team *myTeam, Pokemon *newPokemon);
 
 #endif //PO_C_MON_TEAM_H
