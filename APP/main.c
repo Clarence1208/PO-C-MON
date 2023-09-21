@@ -1,14 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "PRINTS/print.h"
+
 int main(argc, ** argv)
 {
-    int x, y;
-    for(y=0; y<16; y++)
-    {
-        for(x=0; x<16; x++)
-        {
-            float p = perlin2d(x, y, 0.1, 4);
-            printf("%c", (int)(p*9)%10 + '0');
-        }
-        printf("\n");
+    //Get data from the saved file.
+    int isFirstGame = 1; //testing
+    welcomeToPoCmon();
+    if (isFirstGame == 1){
+        //start the game
+        firstGame();
     }
-    return 0;
+
+    //Display
 }

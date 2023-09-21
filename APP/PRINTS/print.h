@@ -1,0 +1,2 @@
+void welcomeToPoCmon();
+void firstGame();
