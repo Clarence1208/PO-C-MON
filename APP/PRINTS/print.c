@@ -65,7 +65,6 @@ Player * firstGame(){
 
     if(myTeam != NULL){
         printf("%s has been added to your team !\n", myTeam->pokemons[0]->name);
-        printf("Move around with ZQSD or zqsd and 'p' to exit game !\n\n");
         Player * player = newPlayer(name, myTeam);
         return player;
     }else{
