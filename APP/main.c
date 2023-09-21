@@ -1,5 +1,6 @@
 #include "POKEMON/pokemon.h"
 #include "POKEDEX/pokedex.h"
+#include "MAP/map.h"
 #include "PLAYER/player.h"
 #include "PRINTS/print.h"
 #include "stdio.h"
@@ -19,6 +20,9 @@ int main(int argc, char ** argv) {
             printf("ERROR");
             return 0;
         }
+
+        createMap(player);
+
     } else{
         //TODO: Get data from the saved file.
     }
