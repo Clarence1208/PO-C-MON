@@ -68,7 +68,6 @@ Player * firstGame(){
         Player * player = newPlayer(name, myTeam);
         return player;
     }else{
-        printf("BOUH");
       return NULL;
     }
 }
