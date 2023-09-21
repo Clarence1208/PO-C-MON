@@ -25,6 +25,7 @@ void printTeam(Team *team){
 }
 void addToTeam(Team *myTeam, Pokemon * newPokemon){
     int index = -1;
+
     if (myTeam->currentNb + 1 > myTeam->max){
         index = removeFromTeam(myTeam);
     }
@@ -36,12 +37,13 @@ void addToTeam(Team *myTeam, Pokemon * newPokemon){
 
     myTeam->currentNb += 1;
     myTeam->alivePokemons += 1;
+
+    printf("%s has been added to the team !\n", newPokemon->name);
 }
 
 int removeFromTeam(Team * myteam){
     int index = -1;
     char choice;
-    Pokemon ** pokemons = myteam->pokemons;
     printf("Oh-ho ! You already have %d pokemons in your team. Which one should you replace with this new one ?", myteam->max);
 
     do {
