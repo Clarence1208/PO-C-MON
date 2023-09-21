@@ -5,7 +5,7 @@ Team * initTeam(Pokemon * starter){
     Team * myTeam = malloc(sizeof(Team));
     short max;
     short currentNb;
-    Pokemon * pokemons;
+    Pokemon ** pokemons;
     short alivePokemons;
 
     myTeam->max = 6;

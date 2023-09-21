@@ -5,11 +5,11 @@
 typedef struct Team{
     short max;
     short currentNb;
-    Pokemon * pokemons;
+    Pokemon ** pokemons;
     short alivePokemons;
 } Team;
 
-Team * initTeam(Pokemon * starter);
+Team * initTeam(Pokemon *starter);
 void addToTeam(Team *myTeam, Pokemon *newPokemon);
 
 #endif //PO_C_MON_TEAM_H
