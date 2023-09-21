@@ -40,7 +40,7 @@ Player * firstGame(){
         printf("2 : Salamèche ");
         printf("3 : Carapuce\n");
 
-        scanf("%c ", &starter);
+        scanf("%c", &starter);
 
         switch (starter) {
             case '1':
