@@ -15,4 +15,6 @@ typedef struct {
 
 Pokemon * newPokemon(char *name, int hpMax, int attack, int defense, int speed, int isSeen, char*type);
 
+void printPokemon(Pokemon *p);
+
 #endif
