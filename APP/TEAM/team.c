@@ -17,18 +17,27 @@ Team * initTeam(Pokemon * starter){
     return myTeam;
 }
 void addToTeam(Team *myTeam, Pokemon * newPokemon){
+    if (myTeam->currentNb + 1 > myTeam->max){
+        removeFromTeam(Team *myteam);
+    }
     myTeam->pokemons[myTeam->currentNb] = newPokemon;
     myTeam->currentNb += 1;
     myTeam->alivePokemons += 1;
 }
 
-void removeFromTeam(Team * myteam, Pokemon *pokeToRemove){
-//    pokemons = myTeam->pokemons;
-//    for (int i = 0; i < myTeam->currentNb; ++i) {
-//
+void removeFromTeam(Team * myteam){
+    Pokemon * pokemons = myteam->pokemons;
+    printf("Oh-ho ! You already have %d pokemons in your team. Which one should you replace with this new one ?", myteam->max);
+    for (int i = 0; i < myteam->currentNb; ++i) {
+        printf("d : %s\n", i, myteam->pokemons[i]->name);
+    }
+    scanf("%c", &choice);
+
+    switch (expression) {
+        
     }
     
     
     myTeam->currentNb -= 1;
-    myTeam->alivePokemons -= 1;
+    myTeam->alivePokemons -= 1;*/
 }
