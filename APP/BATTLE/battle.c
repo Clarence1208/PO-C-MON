@@ -78,6 +78,16 @@ void enemyTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
     double multiplier = getMultiplier(player->team->pokemons[*pokemonUseInd], enemy);
     int damages = (enemy->attack - player->team->pokemons[*pokemonUseInd]->defense) * multiplier ;
     player->team->pokemons[*pokemonUseInd]->hp -= damages;
+
+    if(player->team->pokemons[*pokemonUseInd]->hp <= 0){
+        printf("Your pokemon is dead !\n");
+        player->team->alivePokemons--;
+        if(player->team->alivePokemons == 0){
+            printf("!!!!!!!!!!! You lost !!!!!!!!!!!\n");
+            exit(0);
+        }
+
+    }
     printf("You have %d HP left\n", player->team->pokemons[*pokemonUseInd]->hp);
 }
 
@@ -93,7 +103,7 @@ void launchBattle(Player *player, Pokedex *pokedex){
     int turn;
 
     printf("%d", *pokemonUseInd);
-    //printf("%s", player->team->pokemons[0]->name);
+    printf("%p", player->team->pokemons[0]);
 
 
     printf("A wild %s appeared !\n", enemy->name);
