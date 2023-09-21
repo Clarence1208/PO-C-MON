@@ -1,7 +1,7 @@
 #ifndef PO_C_MON_TEAM_H
 #define PO_C_MON_TEAM_H
 
-typedef struc Team{
+typedef struct Team{
     short max;
     short currentNb;
     Pokemon * pokemons;
