@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "perlin.h"
 
 static int SEED = 0;
 
