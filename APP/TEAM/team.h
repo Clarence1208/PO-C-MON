@@ -11,5 +11,6 @@ typedef struct Team{
 
 Team * initTeam(Pokemon *starter);
 void addToTeam(Team *myTeam, Pokemon *newPokemon);
+void removeFromTeam(Team * myteam, Pokemon *pokeToRemove);
 
 #endif //PO_C_MON_TEAM_H

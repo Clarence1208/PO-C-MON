@@ -16,4 +16,19 @@ Team * initTeam(Pokemon * starter){
 
     return myTeam;
 }
-void addToTeam(Team *myTeam, Pokemon * newPokemon);
+void addToTeam(Team *myTeam, Pokemon * newPokemon){
+    myTeam->pokemons[myTeam->currentNb] = newPokemon;
+    myTeam->currentNb += 1;
+    myTeam->alivePokemons += 1;
+}
+
+void removeFromTeam(Team * myteam, Pokemon *pokeToRemove){
+//    pokemons = myTeam->pokemons;
+//    for (int i = 0; i < myTeam->currentNb; ++i) {
+//
+    }
+    
+    
+    myTeam->currentNb -= 1;
+    myTeam->alivePokemons -= 1;
+}
