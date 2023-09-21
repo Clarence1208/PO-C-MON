@@ -1,4 +1,5 @@
 #include "PERLIN/perlin.h"
+#include "UTILS/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -26,8 +27,6 @@ void movePlayer(char ** map, Player * p, char movement) {
         return;
     }
 
-    printf("Lo");
-
     if(p->x + x < 0 || p->x + x >= 24 || p->y + y < 0 || p->y + y >= 29) {
         return;
     }
@@ -36,7 +35,13 @@ void movePlayer(char ** map, Player * p, char movement) {
         return;
     }
 
-    printf("Le");
+    if(map[p->x + x][p->y] == 'W' || map[p->x][p->y + y] == 'W') {
+        srand(time(NULL));
+        if(rand() % 10 == 0) {
+            //launchBattle() // CLARENCE ICI MON GRAND
+            printf("Battle Should play");
+        }
+    }    
     
     if(x != 0) {
         p->x += x;
@@ -139,16 +144,19 @@ int main(int argc, char *argv[])
     }
     initPlayer(map, player);
     //printMap(map, 26, 30, player);
-    printf("Welcome to Unys ! Move around with ZQSD or zqsd !\n");
+    cls();
+    printf("Welcome to Unys ! Move around with ZQSD or zqsd and 'p' to exit game !\n\n");
     printAroudPlayer(map, player);
     char movement = 0;
     do {
 
+        printf("%c", movement);
         scanf("%c", &movement);
         fflush(stdin);
+        cls();
         movePlayer(map, player, movement);
         printAroudPlayer(map, player);
 
-    }while(movement != 'p');
+    }while(movement != 'p' && movement != 'P');
     return 0;
 }
