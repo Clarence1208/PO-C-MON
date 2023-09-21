@@ -17,6 +17,12 @@ Team * initTeam(Pokemon * starter){
 
     return myTeam;
 }
+
+void printTeam(Team *team){
+    for (int i = 0; i < team->currentNb; i++) {
+        printPokemon(team->pokemons[i]);
+    }
+}
 void addToTeam(Team *myTeam, Pokemon * newPokemon){
     int index = -1;
     if (myTeam->currentNb + 1 > myTeam->max){

@@ -22,9 +22,11 @@ int main(int argc, char ** argv) {
     } else{
         //TODO: Get data from the saved file.
     }
+    printTeam(player->team);
+    //Pokemon *p = newPokemon("Pikachu", 100, 100, 100, 100, 0, "Electric");
+    //printPokemon(p);
+    //addToTeam(player->team, p);
 
-    Pokemon *p = newPokemon("Pikachu", 100, 100, 100, 100, 0, "Electric");
-    printPokemon(p);
 //
 //    Pokedex *pokedex = newPokedexFromCsv("FILES/pokedex.csv");
 //
