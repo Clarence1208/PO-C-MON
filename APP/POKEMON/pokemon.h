@@ -1,14 +1,18 @@
+#ifndef POKEMON_H
+#define POKEMON_H
 
-
-// struct pokemon
-typedef struct pokemon {
+// struct of a pokémon
+typedef struct {
     char *name;
     int hp;
     int hpMax;
     int attack;
     int defense;
     int speed;
+    int isSeen;
     char *type;
 } Pokemon;
 
-Pokemon * newPokemon(char *name, int hpMax, int attack, int defense, int speed,  char*type);
+Pokemon * newPokemon(char *name, int hpMax, int attack, int defense, int speed, int isSeen, char*type);
+
+#endif

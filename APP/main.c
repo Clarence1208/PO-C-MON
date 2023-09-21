@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "PRINTS/print.h"
 #include "POKEMON/pokemon.h"
+#include "POKEDEX/pokedex.h"
 
 int main(int argc, char ** argv) {
     //Get data from the saved file.
@@ -13,6 +14,7 @@ int main(int argc, char ** argv) {
     }
 
     Pokemon *p = newPokemon("Pikachu", 100, 100, 100, 100, "Electric");
+
+    Pokedex *pokedex = newPokedexFromCsv("FILES/pokedex.csv");
     return 0;
-    //Display
 }
