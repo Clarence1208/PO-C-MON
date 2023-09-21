@@ -9,6 +9,42 @@ typedef struct {
     int y;
 }Player;
 
+void movePlayer(char ** map, Player * p, char movement) {
+
+    int x = 0;
+    int y = 0;
+
+    if(movement == 'z' || movement == 'Z') {
+        x = -1;
+    } else if (movement == 's' || movement == 'S') {
+        x = 1;
+    } else if (movement == 'q' || movement == 'Q') {
+        y = -1;
+    } else if (movement == 'd' || movement == 'D') {
+        y = 1;
+    } else {
+        return;
+    }
+
+    printf("Lo");
+
+    if(p->x + x < 0 || p->x + x >= 24 || p->y + y < 0 || p->y + y >= 29) {
+        return;
+    }
+
+    if(map[p->x + x][p->y] == '@' || map[p->x][p->y + y] == '@') {
+        return;
+    }
+
+    printf("Le");
+    
+    if(x != 0) {
+        p->x += x;
+    } else {
+        p->y += y;
+    }
+}
+
 void printMap(char ** map, int row, int column, Player * p) {
     for (int i = 0; i < row; i++) {
         for(int j = 0; j < column; j++) {
@@ -103,6 +139,16 @@ int main(int argc, char *argv[])
     }
     initPlayer(map, player);
     //printMap(map, 26, 30, player);
+    printf("Welcome to Unys ! Move around with ZQSD or zqsd !\n");
     printAroudPlayer(map, player);
+    char movement = 0;
+    do {
+
+        scanf("%c", &movement);
+        fflush(stdin);
+        movePlayer(map, player, movement);
+        printAroudPlayer(map, player);
+
+    }while(movement != 'p');
     return 0;
 }
