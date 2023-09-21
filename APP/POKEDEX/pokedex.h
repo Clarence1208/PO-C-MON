@@ -5,12 +5,14 @@
 
 // struct of the pokédex who will regroup all available pokemons
 typedef struct pokedex {
-    Pokemon *pokemons[11];
+    Pokemon **pokemons;
     int nbPokemons;
 } Pokedex;
 
 Pokedex * newPokedexFromCsv(char *filename);
 
 Pokedex * newPokedexFromDB();
+
+void printPokedex(Pokedex *pokedex);
 
 #endif
