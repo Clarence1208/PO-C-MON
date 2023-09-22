@@ -183,8 +183,8 @@ void createMap(Player * player, Pokedex * pokedex)
         cls();
         if (movement == 'p' || movement == 'P') {
             printCurrentPokedex(pokedex);
-        } else if (movement == 's' || movement == 'S') {
-            //savePlayer(player);
+        } else if (movement == 'x' || movement == 'X') {
+            savePlayer(player);
         } else {
             movePlayer(map, player, movement, pokedex);
         }
