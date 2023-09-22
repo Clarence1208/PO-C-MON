@@ -12,7 +12,7 @@ Team * initTeam(Pokemon * starter){
     myTeam->max = 6;
     myTeam->currentNb = 1;
     myTeam->alivePokemons = 1;
-    myTeam->pokemons = malloc(sizeof(Pokemon *));
+    myTeam->pokemons = malloc(sizeof(Pokemon *) * myTeam->max);
     myTeam->pokemons[0] = starter;
 
     return myTeam;
@@ -25,6 +25,8 @@ void printTeam(Team *team){
 }
 void addToTeam(Team *myTeam, Pokemon * newPokemon){
     int index = -1;
+
+    printf("%d\n", myTeam->currentNb);
 
     if (myTeam->currentNb + 1 > myTeam->max){
         index = removeFromTeam(myTeam);
@@ -44,11 +46,12 @@ void addToTeam(Team *myTeam, Pokemon * newPokemon){
 int removeFromTeam(Team * myteam){
     int index = -1;
     char choice;
-    printf("Oh-ho ! You already have %d pokemons in your team. Which one should you replace with this new one ?", myteam->max);
+    printf("Oh-ho ! You already have %d pokemons in your team. Which one should you replace with this new one ?\n", myteam->max);
 
     do {
+
         for (int i = 0; i < myteam->currentNb; ++i) {
-            printf("d : %s\n", i, myteam->pokemons[i]->name);
+            printf("%d : %s\n", i, myteam->pokemons[i]->name);
         }
         scanf("%c", &choice);
 
@@ -66,10 +69,10 @@ int removeFromTeam(Team * myteam){
                 index = 4;
                 break;
             case '0':
-                index = 3;
+                index = 0;
                 break;
             case '5':
-                index = 3;
+                index = 5;
                 break;
             default:
                 printf("You can only choose the digits above.\n");
