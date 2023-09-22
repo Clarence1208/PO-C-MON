@@ -114,8 +114,17 @@ void initPlayer(char ** map, Player * p) {
     p->y = y;
 }
 
+void freeMap(char ** map) {
+    for(int i = 0; i < 26; i++) {
+        free(map[i]);
+    }
+    free(map);
+}
+
 void createMap(Player * player)
 {
+    cls();
+    printf("Game is Launching......");
     int x, y;
 
     char ** map = malloc(sizeof(char *) * ((25 + 1)));
@@ -139,7 +148,8 @@ void createMap(Player * player)
     initPlayer(map, player);
     //printMap(map, 26, 30, player);
     cls();
-    printAroudPlayer(map, player);
+    printf("Move around with ZQSD or zqsd and 'p' to exit game !\n\n");
+    //printAroudPlayer(map, player);
     char movement = 0;
     do {
 
@@ -150,5 +160,8 @@ void createMap(Player * player)
         printAroudPlayer(map, player);
 
     }while(movement != 'p' && movement != 'P');
+
+    freeMap(map);
+
     return;
 }
