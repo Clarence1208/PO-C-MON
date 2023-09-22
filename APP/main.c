@@ -26,11 +26,6 @@ int main(int argc, char ** argv) {
     Pokemon *p = newPokemon("Pikachu", 100, 100, 100, 100, 0, "Electric");
     //printPokemon(p);
     addToTeam(player->team, p);
-    addToTeam(player->team, p);
-    addToTeam(player->team, p);
-    addToTeam(player->team, p);
-    addToTeam(player->team, p);
-    addToTeam(player->team, p);
 //
 //    Pokedex *pokedex = newPokedexFromCsv("FILES/pokedex.csv");
 //
