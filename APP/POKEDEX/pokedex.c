@@ -1,9 +1,10 @@
 #include "pokedex.h"
+#include "../PLAYER/player.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-Pokedex * newPokedexFromCsv(char *filename){
+Pokedex * newPokedexFromCsv(char *filename, Player * player){
     Pokedex * pokedex = malloc(sizeof(Pokedex));
     pokedex->pokemons = malloc(sizeof(Pokemon) * 11);
 
@@ -44,6 +45,11 @@ Pokedex * newPokedexFromCsv(char *filename){
         pokedex->nbPokemons++;
     }
 
+    for(int i = 0; i < pokedex->nbPokemons; i++) {
+        if (strcmp(player->team->pokemons[0]->name, pokedex->pokemons[i]->name) == 0) {
+            pokedex->pokemons[i]->isSeen = 1;
+        }
+    }
 
 
     free(name);

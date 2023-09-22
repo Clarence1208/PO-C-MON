@@ -1,4 +1,5 @@
 #include "battle.h"
+#include "../UTILS/utils.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -48,6 +49,13 @@ double getMultiplier(Pokemon *attacker, Pokemon *defender){
 
 }
 
+void healPokemon(Player *player) {
+    for(int i = 0; i < player->team->currentNb; i++) {
+        player->team->pokemons[i]->hp = player->team->pokemons[i]->hpMax;
+    }
+    player->team->alivePokemons = player->team->currentNb;
+}
+
 void choosePokemon (Player *player, int *pokemonUseInd){
     int choice;
     printf("Choose a pokemon to fight !\n");
@@ -70,18 +78,22 @@ void choosePokemon (Player *player, int *pokemonUseInd){
 }
 
 int playerTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
-    int choice;
+    char choice;
     printf("What do you want to do ?\n");
     printf("1. Attack\n");
-    printf("2. Change pokemon\n");
+    printf("2. Swap pokemon\n");
     printf("3. Run\n");
-    scanf("%d", &choice);
-    while (choice < 1 || choice > 3){
+    printf("4. Heal pokemon\n");
+    printf("5. Throw pokeball\n");
+    scanf("%c", &choice);
+    while (choice != '1' && choice != '3' && choice != '2' && choice != '4' && choice != '5'){
         printf("You can only choose 1, 2 or 3 !\n");
-        scanf("%d", &choice);
+        scanf("%c", &choice);
+        fflush(stdin);
     }
     switch (choice){
-        case 1:
+        case '1':
+            cls();
             printf("You attack !\n");
             double multiplier = getMultiplier(player->team->pokemons[*pokemonUseInd], enemy);
             int damages = (player->team->pokemons[*pokemonUseInd]->attack - enemy->defense) * multiplier ;
@@ -93,13 +105,16 @@ int playerTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
             } else if (multiplier < 1){
                 printf("It's not very effective...\n");
             }
-            printf("The enemy has %d HP left\n", enemy->hp);
+            if(enemy->hp <= 0) {
+                return 1;
+            }
+            printf("The enemy has %d HP left\n\n", enemy->hp);
             break;
-        case 2:
+        case '2':
             printf("You change pokemon !\n");
             choosePokemon(player, pokemonUseInd);
             break;
-        case 3:
+        case '3':
             printf("You are trying to run !\n");
             srand(time(NULL));
             int rand = random()%2;
@@ -108,8 +123,30 @@ int playerTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
                 return 1;
             } else {
                 printf("You failed to escape !\n");
+                break;
             }
             break;
+        case '4':
+            int heal = player->team->pokemons[*pokemonUseInd]->hpMax;
+            heal /= 2;
+            if(player->team->pokemons[*pokemonUseInd]->hpMax < player->team->pokemons[*pokemonUseInd]->hp + heal) {
+                player->team->pokemons[*pokemonUseInd]->hp = player->team->pokemons[*pokemonUseInd]->hpMax;
+            } else {
+                player->team->pokemons[*pokemonUseInd]->hp = player->team->pokemons[*pokemonUseInd]->hp + heal;
+            }
+            cls();
+            break;
+        case '5':
+            cls();
+            srand(time(NULL));
+            int rando = random() % 3;
+            if (rando == 0) {
+                addToTeam(player->team, enemy);
+                return 1;
+            } else {
+                printf("Ahhrggg you almost caught it !\n\n");
+                break;
+            }
         default:
             printf("You do nothing !\n");
             break;
@@ -140,13 +177,13 @@ void enemyTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
         }
         choosePokemon(player, pokemonUseInd);
     }
-    printf("You have %d HP left\n", player->team->pokemons[*pokemonUseInd]->hp);
+    printf("You have %d HP left\n\n", player->team->pokemons[*pokemonUseInd]->hp);
 }
 
 
 void launchBattle(Player *player, Pokedex *pokedex){
     srand(time(NULL));
-    int rand = random() % pokedex->nbPokemons - 1;
+    int rand = random() % pokedex->nbPokemons;
     pokedex->pokemons[rand]->isSeen = 1;
     Pokemon *enemy = newPokemon(pokedex->pokemons[rand]->name, pokedex->pokemons[rand]->hpMax, pokedex->pokemons[rand]->attack, pokedex->pokemons[rand]->defense, pokedex->pokemons[rand]->speed, pokedex->pokemons[rand]->isSeen, pokedex->pokemons[rand]->type);
 

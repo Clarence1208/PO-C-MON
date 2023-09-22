@@ -1,13 +1,19 @@
 #include "../PERLIN/perlin.h"
 #include "../UTILS/utils.h"
 #include "../PLAYER/player.h"
+#include "../POKEDEX/pokedex.h"
+#include "../BATTLE/battle.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
 #include "map.h"
+#include <unistd.h>
 
-void movePlayer(char ** map, Player * p, char movement) {
+const int MAX_X = 100;
+const int MAX_Y = 100;
+
+void movePlayer(char ** map, Player * p, char movement, Pokedex * pokedex) {
 
     int x = 0;
     int y = 0;
@@ -24,7 +30,7 @@ void movePlayer(char ** map, Player * p, char movement) {
         return;
     }
 
-    if(p->x + x < 0 || p->x + x >= 24 || p->y + y < 0 || p->y + y >= 29) {
+    if(p->x + x < 0 || p->x + x >= MAX_X - 1 || p->y + y < 0 || p->y + y >= MAX_Y - 1) {
         return;
     }
 
@@ -35,7 +41,8 @@ void movePlayer(char ** map, Player * p, char movement) {
     if(map[p->x + x][p->y] == 'W' || map[p->x][p->y + y] == 'W') {
         srand(time(NULL));
         if(rand() % 10 == 0) {
-            //launchBattle() // CLARENCE ICI MON GRAND
+            launchBattle(p, pokedex);
+            healPokemon(p);
         }
     }    
     
@@ -63,14 +70,15 @@ void printMap(char ** map, int row, int column, Player * p) {
 }
 
 void printAroudPlayer(char ** map, Player * p) {
-    for(int i = -4; i < 5; i++) {
-        if (p->x + i < 0 || p->x + i >= 24) {
-            for(int j = 0; j < 13; j++) {
+    printf("Move around with ZQSD or zqsd, 'p' or 'P' to see the pokedex, 'x' or 'X' to save and 'o' or 'O' to exit !\n\n");
+    for(int i = -10; i < 11; i++) {
+        if (p->x + i < 0 || p->x + i >= MAX_X - 1) {
+            for(int j = 0; j < 51; j++) {
                 printf("%c", '_');
             }
         } else {
-            for(int j = -6; j < 7; j++) {
-                if (p->y + j < 0 || p->y + j >= 29) {
+            for(int j = -25; j < 26; j++) {
+                if (p->y + j < 0 || p->y + j >= MAX_Y - 1) {
                     printf("%c", '|');
                 } else if (i == 0 && j == 0) {
                     printf("\033[1;31m%c\033[0m", 'X');
@@ -100,8 +108,8 @@ void initPlayer(char ** map, Player * p) {
     while (count != 25) {
         count = 0;
         srand(time(NULL));
-        x = rand() % 21 + 2;
-        y = rand() % 26 + 2;
+        x = rand() % (MAX_X - 4) + 2;
+        y = rand() % (MAX_Y - 4) + 2;
         for(int i = -2; i < 3; i++) {
             for(int j = -2; j < 3; j++) {
                 if(map[x + i][y + j] == '.' || map[x + i][y + j] == 'W') {
@@ -115,40 +123,57 @@ void initPlayer(char ** map, Player * p) {
 }
 
 void freeMap(char ** map) {
-    for(int i = 0; i < 26; i++) {
+    for(int i = 0; i < MAX_X+1; i++) {
         free(map[i]);
     }
     free(map);
 }
 
-void createMap(Player * player)
+void printCurrentPokedex(Pokedex * pokedex) {
+
+    printf("This is your current pokedex !\n\n");
+
+    for(int i = 0; i < pokedex->nbPokemons; i++) {
+        if (pokedex->pokemons[i]->isSeen == 1) {
+            printf("%s - %s", pokedex->pokemons[i]->name, "Seen\n");
+        } else {
+            printf("%s - %s", "???????", "Unknown\n");
+        }
+    }
+
+    sleep(10);
+
+    return;
+
+}
+
+void createMap(Player * player, Pokedex * pokedex)
 {
     cls();
     printf("Game is Launching......");
     int x, y;
 
-    char ** map = malloc(sizeof(char *) * ((25 + 1)));
-    for(int i = 0; i < 26; i++) {
-        map[i] = malloc(sizeof(char) * 30);
+    char ** map = malloc(sizeof(char *) * ((MAX_X + 1)));
+    for(int i = 0; i < MAX_X+1; i++) {
+        map[i] = malloc(sizeof(char) * MAX_Y);
     }
 
-    for(y=0; y<26; y++) {
-        for(x=0; x<30; x++) {
+    for(y=0; y<MAX_X+1; y++) {
+        for(x=0; x<MAX_Y; x++) {
             double result = perlin2d(x, y, 0.1, 4);
             if(result > 0.65) {
                 map[y][x] = 'W';
-            } else if (result > 0.5) {
+            } else if (result > 0.4) {
                 map[y][x] = '.';
             } else {
                 map[y][x] = '@';
             }
         }
-        map[y][29] = '\n';
+        map[y][MAX_Y-1] = '\n';
     }
     initPlayer(map, player);
     //printMap(map, 26, 30, player);
     cls();
-    printf("Move around with ZQSD or zqsd and 'p' to exit game !\n\n");
     //printAroudPlayer(map, player);
     char movement = 0;
     do {
@@ -156,10 +181,16 @@ void createMap(Player * player)
         scanf("%c", &movement);
         fflush(stdin);
         cls();
-        movePlayer(map, player, movement);
+        if (movement == 'p' || movement == 'P') {
+            printCurrentPokedex(pokedex);
+        } else if (movement == 's' || movement == 'S') {
+            //savePlayer(player);
+        } else {
+            movePlayer(map, player, movement, pokedex);
+        }
         printAroudPlayer(map, player);
 
-    }while(movement != 'p' && movement != 'P');
+    }while(movement != 'o' && movement != 'O');
 
     freeMap(map);
 

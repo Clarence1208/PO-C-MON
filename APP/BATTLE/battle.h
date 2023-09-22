@@ -7,4 +7,8 @@
 
 void launchBattle(Player *player, Pokedex *pokedex);
 
+void enemyTurn(Player *player, Pokemon *enemy, int *pokemonUseInd);
+
+void healPokemon(Player *player);
+
 #endif

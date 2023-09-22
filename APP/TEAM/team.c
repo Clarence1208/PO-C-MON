@@ -48,7 +48,7 @@ int removeFromTeam(Team * myteam){
 
     do {
         for (int i = 0; i < myteam->currentNb; ++i) {
-            printf("d : %s\n", i, myteam->pokemons[i]->name);
+            printf("%d : %s\n", i, myteam->pokemons[i]->name);
         }
         scanf("%c", &choice);
 

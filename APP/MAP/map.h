@@ -9,7 +9,7 @@
 #include <time.h>
 #include <math.h>
 
-void movePlayer(char ** map, Player * p, char movement);
+void movePlayer(char ** map, Player * p, char movement, Pokedex * poke);
 
 void printMap(char ** map, int row, int column, Player * p);
 
@@ -17,6 +17,8 @@ void printAroudPlayer(char ** map, Player * p);
 
 void initPlayer(char ** map, Player * p);
 
-void createMap(Player * p);
+void printCurrentPokedex(Pokedex * pokedex);
+
+void createMap(Player * p, Pokedex * poke);
 
 #endif
