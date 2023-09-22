@@ -15,29 +15,37 @@ int main(int argc, char ** argv) {
     //DB VARIABLES
     sqlite3 *db;
     char *zErrMsg = 0;
-    int rc;
+    int rc =  sqlite3_open("DATABASE/pocmon.db", &db);;
     char *sql;
 
-    createDatabase(db, sql, zErrMsg, rc);
     createTablePlayers(db, sql, zErrMsg, rc);
-    printTablePlayers(db, sql, zErrMsg, rc);
+    createTableTeams(db, sql, zErrMsg, rc);
+    isFirstGame = getFirstGame();
 
-   // welcomeToPoCmon();
+    welcomeToPoCmon();
 
-//    if (isFirstGame == 1) {
-//        //start the game
-//        player = firstGame();
-//        if (player == NULL){
-//            printf("ERROR");
-//            return 0;
-//        }
-//    } else{
-//        //TODO: Get data from the saved file.
-//    }
+    if (isFirstGame == 1) {
+        //start the game
+        player = firstGame();
+        if (player == NULL){
+            printf("ERROR");
+            return 0;
+        }
+    } else{
+        printf("You already played.\n");
+    }
 
-    //printTeam(player->team);
+    savePlayer(player);
+
+    //printTablePlayers(db, sql, zErrMsg, rc);
+    sqlite3_close(db);
+    if (player != NULL){
+        free(player->team);
+        free(player);
+    }
+//    printTeam(player->team);
 //    Pokemon *p = newPokemon("Pikachu", 100, 100, 100, 100, 0, "Electric");
-    //printPokemon(p);
+//    printPokemon(p);
 //    addToTeam(player->team, p);
 //
 //    Pokedex *pokedex = newPokedexFromCsv("FILES/pokedex.csv");
