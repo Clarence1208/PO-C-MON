@@ -9,8 +9,8 @@ Player * newPlayer(char * name, Team *myTeam){
     strcpy(player->name, name);
     player->team = malloc(sizeof(Team*));
     player->team = myTeam;
-    player->positionX = 0;
-    player->positionY = 0;
+    player->x = 0;
+    player->y = 0;
 }
 
 char * getName(){
