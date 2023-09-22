@@ -48,7 +48,28 @@ double getMultiplier(Pokemon *attacker, Pokemon *defender){
 
 }
 
-void playerTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
+void choosePokemon (Player *player, int *pokemonUseInd){
+    int choice;
+    printf("Choose a pokemon to fight !\n");
+    int count = player->team->alivePokemons;
+    for (int i = 0; i < count; i++){
+        if (player->team->pokemons[i] <= 0){
+            count++;
+            continue;
+        }
+        printf("%d. - %s\n", i+1, player->team->pokemons[i]->name);
+    }
+    scanf("%d", &choice);
+    while (choice < 1 || choice > player->team->alivePokemons){
+        printf("You can only choose a pokemon in your team !\n");
+        scanf("%d", &choice);
+    }
+    *pokemonUseInd = choice - 1;
+    printf("You choose %s !\n\n", player->team->pokemons[*pokemonUseInd]->name);
+    printf("Go %s !\n", player->team->pokemons[*pokemonUseInd]->name);
+}
+
+int playerTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
     int choice;
     printf("What do you want to do ?\n");
     printf("1. Attack\n");
@@ -58,26 +79,53 @@ void playerTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
     switch (choice){
         case 1:
             printf("You attack !\n");
-            enemy->hp -= player->team->pokemons[*pokemonUseInd]->attack;
+            double multiplier = getMultiplier(player->team->pokemons[*pokemonUseInd], enemy);
+            int damages = (player->team->pokemons[*pokemonUseInd]->attack - enemy->defense) * multiplier ;
+            enemy->hp -= damages;
+            printf("%s is using %s against the  %s enemy !\n", player->team->pokemons[*pokemonUseInd]->name, player->team->pokemons[*pokemonUseInd]->attackName, enemy->name);
+            printf("You deal %d damages !\n", damages);
+            if (multiplier > 1){
+                printf("It's super effective !\n");
+            } else if (multiplier < 1){
+                printf("It's not very effective...\n");
+            }
             printf("The enemy has %d HP left\n", enemy->hp);
             break;
         case 2:
             printf("You change pokemon !\n");
+            choosePokemon(player, pokemonUseInd);
             break;
         case 3:
-            printf("You run !\n");
+            printf("You are trying to run !\n");
+            srand(time(NULL));
+            int rand = random()%2;
+            if (rand == 0){
+                printf("You escaped !\n");
+                return 1;
+            } else {
+                printf("You failed to escape !\n");
+            }
             break;
         default:
             printf("You do nothing !\n");
             break;
     }
+    return 0;
 }
 
 void enemyTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
     printf("The enemy attacks !\n");
-    double multiplier = getMultiplier(player->team->pokemons[*pokemonUseInd], enemy);
+    double multiplier = getMultiplier(enemy, player->team->pokemons[*pokemonUseInd]);
     int damages = (enemy->attack - player->team->pokemons[*pokemonUseInd]->defense) * multiplier ;
     player->team->pokemons[*pokemonUseInd]->hp -= damages;
+
+    printf("the %s enemy is using %s against %s !\n", enemy->name, enemy->attackName, player->team->pokemons[*pokemonUseInd]->name);
+    printf("The enemy deals %d damages !\n", damages);
+    if (multiplier > 1){
+        printf("It's super effective !\n");
+    } else if (multiplier < 1){
+        printf("It's not very effective...\n");
+    }
 
     if(player->team->pokemons[*pokemonUseInd]->hp <= 0){
         printf("Your pokemon is dead !\n");
@@ -86,6 +134,7 @@ void enemyTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
             printf("!!!!!!!!!!! You lost !!!!!!!!!!!\n");
             exit(0);
         }
+        choosePokemon(player, pokemonUseInd);
 
     }
     printf("You have %d HP left\n", player->team->pokemons[*pokemonUseInd]->hp);
@@ -102,8 +151,10 @@ void launchBattle(Player *player, Pokedex *pokedex){
     *pokemonUseInd = 0;
     int turn;
 
-    printf("%d", *pokemonUseInd);
-    printf("%p", player->team->pokemons[0]);
+    /*printf("%d", *pokemonUseInd);
+    printf("%p", player->team->pokemons[0]);*/
+
+    int escape = 0;
 
 
     printf("A wild %s appeared !\n", enemy->name);
@@ -111,7 +162,10 @@ void launchBattle(Player *player, Pokedex *pokedex){
 
     if (player->team->pokemons[*pokemonUseInd]->speed > enemy->speed){
         printf("You start !\n");
-        playerTurn(player, enemy, pokemonUseInd);
+        escape = playerTurn(player, enemy, pokemonUseInd);
+        if (escape == 1){
+            return;
+        }
         turn = 0;
     } else {
         printf("The enemy starts !\n");
@@ -121,7 +175,10 @@ void launchBattle(Player *player, Pokedex *pokedex){
 
     while (player->team->alivePokemons > 0 || enemy->hp > 0){
         if (turn == 0){
-            playerTurn(player, enemy, pokemonUseInd);
+            escape = playerTurn(player, enemy, pokemonUseInd);
+            if (escape == 1){
+                return;
+            }
             turn = 1;
         } else {
             enemyTurn(player, enemy, pokemonUseInd);
