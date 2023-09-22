@@ -32,11 +32,16 @@ int main(int argc, char ** argv) {
             return 0;
         }
     } else{
-        printf("You already played.\n");
+        printf("You already played but you can do it again !.\n");
+        player = firstGame();
+        if (player == NULL){
+            printf("ERROR");
+            return 0;
+        }
     }
 
-    savePlayer(player);
-
+    //savePlayer(player);
+    //DEBUG
     //printTablePlayers(db, sql, zErrMsg, rc);
     sqlite3_close(db);
     if (player != NULL){
