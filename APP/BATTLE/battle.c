@@ -82,7 +82,7 @@ int playerTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
             double multiplier = getMultiplier(player->team->pokemons[*pokemonUseInd], enemy);
             int damages = (player->team->pokemons[*pokemonUseInd]->attack - enemy->defense) * multiplier ;
             enemy->hp -= damages;
-            printf("%s is using %s against the  %s enemy !\n", player->team->pokemons[*pokemonUseInd]->name, player->team->pokemons[*pokemonUseInd]->attackName, enemy->name);
+            printf("%s is attacking the  %s enemy !\n", player->team->pokemons[*pokemonUseInd]->name, enemy->name);
             printf("You deal %d damages !\n", damages);
             if (multiplier > 1){
                 printf("It's super effective !\n");
@@ -119,7 +119,7 @@ void enemyTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
     int damages = (enemy->attack - player->team->pokemons[*pokemonUseInd]->defense) * multiplier ;
     player->team->pokemons[*pokemonUseInd]->hp -= damages;
 
-    printf("the %s enemy is using %s against %s !\n", enemy->name, enemy->attackName, player->team->pokemons[*pokemonUseInd]->name);
+    printf("the %s enemy is attacking %s !\n", enemy->name, player->team->pokemons[*pokemonUseInd]->name);
     printf("The enemy deals %d damages !\n", damages);
     if (multiplier > 1){
         printf("It's super effective !\n");
@@ -135,7 +135,6 @@ void enemyTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
             exit(0);
         }
         choosePokemon(player, pokemonUseInd);
-
     }
     printf("You have %d HP left\n", player->team->pokemons[*pokemonUseInd]->hp);
 }
