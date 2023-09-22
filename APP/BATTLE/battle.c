@@ -76,6 +76,10 @@ int playerTurn(Player *player, Pokemon *enemy, int *pokemonUseInd){
     printf("2. Change pokemon\n");
     printf("3. Run\n");
     scanf("%d", &choice);
+    while (choice < 1 || choice > 3){
+        printf("You can only choose 1, 2 or 3 !\n");
+        scanf("%d", &choice);
+    }
     switch (choice){
         case 1:
             printf("You attack !\n");
@@ -165,11 +169,11 @@ void launchBattle(Player *player, Pokedex *pokedex){
         if (escape == 1){
             return;
         }
-        turn = 0;
+        turn = 1;
     } else {
         printf("The enemy starts !\n");
         enemyTurn(player, enemy, pokemonUseInd);
-        turn = 1;
+        turn = 0;
     }
 
     while (player->team->alivePokemons > 0 || enemy->hp > 0){

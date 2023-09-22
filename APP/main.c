@@ -22,6 +22,8 @@ int main(int argc, char ** argv) {
             return 0;
         }
         launchBattle(player, pokedex);
+        free(player);
+        free(pokedex);
     } else{
         //TODO: Get data from the saved file.
     }
