@@ -46,19 +46,19 @@ int main(int argc, char ** argv) {
     pokedex = newPokedexFromCsv("FILES/pokedex.csv", player);
 
     createMap(player, pokedex);
-    free(player);
+    if (player != NULL){
+        free(player->team);
+        free(player);
+    }
     free(pokedex);
-
+    sqlite3_close(db);
 
     //DEBUG
     //savePlayer(player);
     //launchBattle(player, pokedex);
     //printTablePlayers(db, sql, zErrMsg, rc);
-    sqlite3_close(db);
-    if (player != NULL){
-        free(player->team);
-        free(player);
-    }
+
+
 //    printTeam(player->team);
 //    Pokemon *p = newPokemon("Pikachu", 100, 100, 100, 100, 0, "Electric");
 //    printPokemon(p);

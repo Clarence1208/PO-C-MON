@@ -3,6 +3,7 @@
 #include "../PLAYER/player.h"
 #include "../POKEDEX/pokedex.h"
 #include "../BATTLE/battle.h"
+#include "../DATABASE/database.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
