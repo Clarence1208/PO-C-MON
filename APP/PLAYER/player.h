@@ -5,8 +5,8 @@
 typedef struct Player{
     char * name;
     Team * team;
-    int positionX;
-    int positionY;
+    int x;
+    int y;
 } Player;
 
 Player * newPlayer(char * name, Team *myTeam);

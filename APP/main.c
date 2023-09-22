@@ -1,6 +1,7 @@
 #include "POKEMON/pokemon.h"
 #include "POKEDEX/pokedex.h"
 #include "BATTLE/battle.h"
+#include "MAP/map.h"
 #include "PLAYER/player.h"
 #include "PRINTS/print.h"
 #include <stdlib.h>
@@ -24,6 +25,9 @@ int main(int argc, char ** argv) {
         launchBattle(player, pokedex);
         free(player);
         free(pokedex);
+
+        createMap(player);
+
     } else{
         //TODO: Get data from the saved file.
     }

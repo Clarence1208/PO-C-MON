@@ -10,6 +10,8 @@ typedef struct Team{
 } Team;
 
 Team * initTeam(Pokemon *starter);
+void printTeam(Team *team);
 void addToTeam(Team *myTeam, Pokemon *newPokemon);
+int removeFromTeam(Team * myteam);
 
 #endif //PO_C_MON_TEAM_H
