@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+int callback(void *NotUsed, int argc, char **argv, char **azColName)
+{
+    int i;
+    for(i = 0; i<argc; i++)
+    {
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+    printf("\n");
+    return 0;
+}
+
 void createDatabase(sqlite3 *db, char *sql, char *zErrMsg, int rc)
 {
     rc = sqlite3_open("DATABASE/poCmon.db", &db);
@@ -15,17 +26,14 @@ void createDatabase(sqlite3 *db, char *sql, char *zErrMsg, int rc)
         printf("\n");
     }
 }
-void createTableUsers(sqlite3 *db, char *sql, char *zErrMsg, int rc)
+void createTablePlayers(sqlite3 *db, char *sql, char *zErrMsg, int rc)
 {
-    sql = "CREATE TABLE IF NOT EXISTS USERS("  \
+    sql = "CREATE TABLE IF NOT EXISTS PLAYERS("  \
             "ID                INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," \
-            "USERNAME          VARCHAR(30)    NOT NULL," \
-            "AGE               INTEGER     NOT NULL," \
-            "PASSWORD          VARCHAR(30)," \
-            "TARGETED_GLYCEMIA FLOAT     NOT NULL," \
-            "HYPERGLYCEMIA     INTEGER     NOT NULL," \
-            "HYPOGLYCEMIA      INTEGER     NOT NULL," \
-            "CREATED_AT        DATETIME);";
+            "NAME          VARCHAR(30)    NOT NULL,"\
+            "FIRSTGAME      INTEGER DEFAULT 0"\
+            "TEAM_ID        INTEGER NOT NULL"\
+            "FOREIGN KEY (TEAM_ID) REFERENCES TEAM (ID));";
 
     /* Execute SQL statement */
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -37,9 +45,9 @@ void createTableUsers(sqlite3 *db, char *sql, char *zErrMsg, int rc)
     }
 }
 
-void printTableUsers(sqlite3 *db, char *sql, char *zErrMsg, int rc)
+void printTablePlayers(sqlite3 *db, char *sql, char *zErrMsg, int rc)
 {
-    sql = "SELECT * FROM USERS";
+    sql = "SELECT * FROM PLAYERS";
 
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
 

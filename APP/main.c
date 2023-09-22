@@ -2,6 +2,7 @@
 #include "POKEDEX/pokedex.h"
 #include "PLAYER/player.h"
 #include "PRINTS/print.h"
+#include "DATABASE/database.h"
 #include "stdio.h"
 #include "stdlib.h"
 
@@ -26,14 +27,6 @@ int main(int argc, char ** argv) {
     Pokemon *p = newPokemon("Pikachu", 100, 100, 100, 100, 0, "Electric");
     //printPokemon(p);
     addToTeam(player->team, p);
-    addToTeam(player->team, p);
-    addToTeam(player->team, p);
-    addToTeam(player->team, p);
-    addToTeam(player->team, p);
-    addToTeam(player->team, p);
-
-
-
 
 
 //
