@@ -12,7 +12,7 @@ Team * initTeam(Pokemon * starter){
     myTeam->max = 6;
     myTeam->currentNb = 1;
     myTeam->alivePokemons = 1;
-    myTeam->pokemons = malloc(sizeof(Pokemon *));
+    myTeam->pokemons = malloc(sizeof(Pokemon *) * 6);
     myTeam->pokemons[0] = starter;
 
     return myTeam;

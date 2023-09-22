@@ -148,7 +148,7 @@ void launchBattle(Player *player, Pokedex *pokedex){
     srand(time(NULL));
     int rand = random() % pokedex->nbPokemons - 1;
     pokedex->pokemons[rand]->isSeen = 1;
-    Pokemon *enemy = pokedex->pokemons[rand];
+    Pokemon *enemy = newPokemon(pokedex->pokemons[rand]->name, pokedex->pokemons[rand]->hpMax, pokedex->pokemons[rand]->attack, pokedex->pokemons[rand]->defense, pokedex->pokemons[rand]->speed, pokedex->pokemons[rand]->isSeen, pokedex->pokemons[rand]->type);
 
     int *pokemonUseInd = malloc(sizeof(int));
     *pokemonUseInd = 0;
@@ -158,7 +158,6 @@ void launchBattle(Player *player, Pokedex *pokedex){
     printf("%p", player->team->pokemons[0]);*/
 
     int escape = 0;
-
 
     printf("A wild %s appeared !\n", enemy->name);
     printf("Starting battle...\n\n");
